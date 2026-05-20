@@ -1,33 +1,83 @@
+"""
+================================================================================
+                                 Unit Testing Module.
+================================================================================
+
+This module contains unit tests for the PesoTrack application using the
+`pytest` framework. It verifies the correctness of the logic in `models`
+and `core` modules, specifically testing encapsulation, calculation logic,
+and data persistence.
+
+Classes:
+    MockInputReader: A mock object to simulate input reading.
+    MockOutputWriter: A mock object to capture output writing.
+
+================================================================================
+"""
+
 import pytest
 import os
 from models import Transaction
 from core import FinanceManager
 
+
 class MockInputReader:
-    """A fake reader that provides data without needing user input."""
+    """
+    A mock implementation of IInputReader for testing purposes.
+
+    Provides hardcoded data to avoid user interaction during tests.
+    """
 
     def get_transactions(self):
+        """
+        Returns a predefined list of mock transactions.
+
+        Returns:
+            List[Transaction]: Hardcoded transaction list.
+        """
         return [
             Transaction("2023-10-01", "Lunch", "Food", 500.0),
             Transaction("2023-10-02", "Rent", "Housing", 2000.0),
         ]
 
     def get_ids_to_delete(self):
+        """
+        Returns an empty list as deletion is not tested here.
+
+        Returns:
+            List: Empty list.
+        """
         return []
 
 
 class MockOutputWriter:
-    """A fake writer that captures the result."""
+    """
+    A mock implementation of IOutputWriter for testing purposes.
+
+    Captures the data passed to it for assertion in tests.
+    """
 
     def __init__(self):
+        """Initializes the storage list."""
         self.reports = []
 
     def write_report(self, report_data):
+        """
+        Appends the report data to the internal list.
+
+        Args:
+            report_data (Dict): Data to capture.
+        """
         self.reports.append(report_data)
 
 
 def test_transaction_encapsulation():
-    """Test 1: Test that setters validate data correctly."""
+    """
+    Test 1: Verify Transaction encapsulation and validation.
+
+    Checks that the amount property setter correctly validates input
+    and raises ValueError for negative numbers.
+    """
     t = Transaction("2023-01-01", "Test", "TestCat", 100)
     assert t.amount == 100
 
@@ -37,11 +87,16 @@ def test_transaction_encapsulation():
 
 
 def test_add_expense_logic():
-    """Test 2: Test adding expenses and calculating total."""
+    """
+    Test 2: Verify adding expenses and calculating totals.
+
+    Tests that transactions are added correctly and the total calculation
+    sums the amounts accurately.
+    """
     # Arrange
     mock_reader = MockInputReader()
     mock_writer = MockOutputWriter()
-    # Use a separate file for testing to avoid messing up real data
+    # Use a separate file for testing
     manager = FinanceManager(mock_reader, mock_writer, filename="test_expenses.csv")
 
     # Clean up test file if it exists
@@ -57,7 +112,12 @@ def test_add_expense_logic():
 
 
 def test_delete_expense_logic():
-    """Test 3: Test deleting expenses."""
+    """
+    Test 3: Verify deleting expenses by index.
+
+    Tests that `delete_expenses` correctly removes items from the list
+    based on their string IDs (e.g., "row_0").
+    """
     # Arrange
     mock_reader = MockInputReader()
     mock_writer = MockOutputWriter()
@@ -75,7 +135,12 @@ def test_delete_expense_logic():
 
 
 def test_category_breakdown():
-    """Test 4: Test the Expenses Report logic (Category Breakdown)."""
+    """
+    Test 4: Verify the Expenses Report logic (Category Breakdown).
+
+    Tests that `get_category_breakdown` correctly aggregates amounts
+    by their category.
+    """
     # Arrange
     mock_reader = MockInputReader()
     mock_writer = MockOutputWriter()
