@@ -1,7 +1,7 @@
 # PesoTrack 💰
 
 [![Python](https://img.shields.io/badge/Python-80.3%25-3776ab?logo=python&logoColor=white)](https://www.python.org/)
-[![HTML](https://img.shields.io/badge/HTML-18.7%25-e34c26?logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
+[![HTML](https://img.shields.io/badge/HTML-19.7%25-e34c26?logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![GitHub](https://img.shields.io/badge/GitHub-CharlesGolde-blue?logo=github)](https://github.com/Clarky-Masarap)
 
